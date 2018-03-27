@@ -1,0 +1,11 @@
+[ignore]
+.*/node_modules/findup/test/fixture/.*
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

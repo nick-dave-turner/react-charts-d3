@@ -1,0 +1,72 @@
+{
+  "name": "react-charts-d3",
+  "version": "1.0.0",
+  "description": "A collection of easy to use charts created in D3 for your React applications.",
+  "author": "Nick Turner",
+  "homepage": "https://nick-dave-turner.github.io/react-charts-d3.github.io/",
+  "keywords": [
+    "d3",
+    "react",
+    "charts",
+    "ReactJS",
+    "react-component"
+  ],
+  "license": "MIT",
+  "main": "dist/react-charts-d3.js",
+  "scripts": {
+    "start": "styleguidist server",
+    "build": "webpack -p",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepublish": "npm run format && npm run test && npm run build && npm run styleguide:build",
+    "styleguide:build": "styleguidist build",
+    "flow": "flow",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nick-dave-turner/react-charts-d3"
+  },
+  "dependencies": {
+    "d3-array": "^1.2.1",
+    "d3-axis": "^1.0.8",
+    "d3-color": "^1.0.3",
+    "d3-dispatch": "^1.0.3",
+    "d3-ease": "^1.0.3",
+    "d3-interpolate": "^1.1.6",
+    "d3-scale": "^2.0.0",
+    "d3-scale-chromatic": "^1.2.0",
+    "d3-selection": "^1.3.0",
+    "d3-shape": "^1.2.0",
+    "d3-transition": "^1.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^22.4.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "flow-bin": "^0.68.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^22.4.3",
+    "prettier": "^1.11.1",
+    "react-styleguidist": "^6.5.2",
+    "react-test-renderer": "^16.2.0",
+    "sinon": "^4.4.8",
+    "webpack": "3.10.0"
+  }
+}

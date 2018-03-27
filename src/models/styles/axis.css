@@ -1,0 +1,12 @@
+.axis .label {
+    fill: #000;
+}
+
+.grid .tick line {
+    fill: #ddd;
+    opacity: .1;
+}
+
+.grid path {
+    opacity: 0;
+}

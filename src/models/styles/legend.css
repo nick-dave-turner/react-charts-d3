@@ -1,0 +1,12 @@
+.legend-item {
+    cursor: pointer;
+}
+
+.legend-icon {
+    shape-rendering: crispEdges;
+}
+
+.legend-label {
+    font-size: 10px;
+    font-family :sans-serif;
+}
