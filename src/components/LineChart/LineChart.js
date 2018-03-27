@@ -8,7 +8,7 @@ import * as dom from '../../utils/dom';
 import * as chart from '../../utils/chart';
 import * as scales from '../../utils/scales';
 
-import lines from '../../models/lines';
+import lines from '../../models/line';
 import noData from '../../models/noData';
 import legend from '../../models/legend';
 import axisLabel from '../../models/axis';
