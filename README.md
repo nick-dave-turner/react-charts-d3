@@ -3,6 +3,7 @@ A collection of easy to use charts created in D3 for your React applications.
 
 * Bar Chart
 * Line Chart
+* Scatter Chart
 
 [View chart examples](https://nick-dave-turner.github.io/react-charts-d3.github.io/)
 
@@ -17,26 +18,32 @@ yarn add react-charts-d3
 And import the chart types you want
 
 ```es6
-import { BarChart, LineChart } from 'react-charts-d3';
+import { BarChart, LineChart, ScatterChart } from 'react-charts-d3';
 ```
 
 ## Charts
 
 [Bar chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#barchart)
-##### List of options available under PROPS & METHODS
 
 ```jsx
 <BarChart data={data} />
 ```
 
 [Line chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#linechart)
-##### List of options available under PROPS & METHODS
 
 ```jsx
 <LineChart data={data} />
 ```
 
-## Data
+[Scatter chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#scatterchart)
+
+```jsx
+<ScatterChart data={data} />
+```
+
+##### Full list of options for each chart is available under PROPS & METHODS in the example guide.
+
+## Data Structures
 
 ```jsx
 const data = [
@@ -49,6 +56,6 @@ const data = [
 
 Contributions are welcome. Check out [CONTRIBUTING.md](CONTRIBUTING.md)
 
-- [Report bugs](https://github.com/nick-dave-turner/react-charts-d3/issues)
+- [Report bugs here.](https://github.com/nick-dave-turner/react-charts-d3/issues)
 
 
