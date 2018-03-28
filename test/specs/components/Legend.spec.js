@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LineChart from '../../../src/components/LineChart/LineChart';
+import Legend from '../../../src/components/Legend/Legend';
 
-xdescribe('<LineChart/>', () => {
+xdescribe('<Legend/>', () => {
   let component;
 
   beforeEach(() => {
-    component = shallow(<LineChart />);
+    component = shallow(<Legend />);
   });
 
   it('should render component', () => {
