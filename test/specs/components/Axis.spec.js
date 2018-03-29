@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Axis from '../../../src/components/Axis/Axis';
 
-xdescribe('<Axis/>', () => {
+xdescribe('<Axis />', () => {
   let component;
 
   beforeEach(() => {

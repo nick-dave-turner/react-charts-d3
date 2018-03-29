@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Bars from '../../../src/components/BarChart/Bars';
+import Points from '../../../src/components/ScatterChart/Points';
 
-xdescribe('<Bar />', () => {
+xdescribe('<Points />', () => {
   let component;
 
   beforeEach(() => {
-    component = shallow(<Bars />);
+    component = shallow(<Points />);
   });
 
   it('should render component', () => {

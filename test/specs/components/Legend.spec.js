@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Legend from '../../../src/components/Legend/Legend';
 
-xdescribe('<Legend/>', () => {
+xdescribe('<Legend />', () => {
   let component;
 
   beforeEach(() => {
