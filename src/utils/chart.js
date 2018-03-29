@@ -1,15 +1,7 @@
 // @flow
 import * as scales from './scales';
 
-import type { ChartData } from './scales';
-import type { Margin } from './dom';
-
-export type AxisLabels = {
-  xLabel?: string,
-  xLabelPosition?: string,
-  yLabel?: string,
-  yLabelPosition?: string,
-};
+import type { ChartData, Margin } from './commonTypes';
 
 export function calculateChartValues(
   data: Array<ChartData>,
@@ -27,7 +19,6 @@ export function calculateChartValues(
   const y: any = scales.createDomainRangeScales(yScaleType, data, 'y', w, h);
 
   return {
-    data,
     w,
     h,
     m,
@@ -64,14 +55,4 @@ export function mapSeriesToData(chartData: Array<ChartData>): Array<ChartData> {
   });
 
   return chartData;
-}
-
-export function dynamicGetSet(option: string, component: (() => any) => any) {
-  return function getSet(_: any) {
-    if (!arguments.length) {
-      return this[option];
-    }
-    this[option] = _;
-    return component;
-  };
 }

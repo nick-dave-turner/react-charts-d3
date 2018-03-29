@@ -3,25 +3,7 @@ import { max, extent } from 'd3-array';
 import { scaleBand, scaleLinear, scaleOrdinal, scalePoint } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 
-export type ChartDataItem = {
-  x: string,
-  y: number,
-  index?: number,
-  series?: number,
-  key?: string,
-};
-
-export type ChartData = {
-  key: string,
-  values: Array<ChartDataItem>,
-  index?: number,
-  disabled?: boolean,
-};
-
-export type ColorScale = {
-  from?: string,
-  to?: string,
-};
+import { ChartData, ColorScale } from './commonTypes';
 
 export function createDomainRangeScales(
   axesScaleType: string,
@@ -32,7 +14,7 @@ export function createDomainRangeScales(
 ): any {
   let axes;
 
-  /** Flatten chartData array so we can work with total values of all groups */
+  /** Flatten chartData array so we can work with total values of all groups. */
   const data = chartData.reduce((a, b) => a.concat(b.values), []);
 
   switch (axesScaleType) {

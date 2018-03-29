@@ -2,23 +2,24 @@ import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
-import { axisBottom, axisLeft } from 'd3-axis';
 
-import * as dom from '../../utils/dom';
+import Lines from './Lines';
+import Axis from '../Axis/Axis';
+import Legend from '../Legend/Legend';
+import NoData from '../NoData/NoData';
+
 import * as chart from '../../utils/chart';
 import * as scales from '../../utils/scales';
 
-import lines from '../../models/lines';
-import noData from '../../models/noData';
-import legend from '../../models/legend';
-import axisLabel from '../../models/axis';
-
-import type { Margin } from '../../utils/dom';
-import type { ChartData } from '../../utils/scales';
-import type { AxisLabels } from '../../utils/chart';
+import type {
+  ChartData,
+  Margin,
+  AxisConfig,
+  ColorScale,
+} from '../../utils/commonTypes';
 
 type Props = {
-  /** Chart Data to be consumed by chart */
+  /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
   width?: number,
@@ -26,32 +27,30 @@ type Props = {
   height?: number,
   /** Object containing the margins for the chart or component. You can specify only certain margins in the object to change just those parts. */
   margin?: Margin,
-  /** Display or hide the Legend */
+  /** Display or hide the Legend. */
   showLegend?: boolean,
-  /** Display or hide the X axis */
-  showXAxis?: boolean,
-  /** Display or hide the Y axis */
-  showYAxis?: boolean,
-  /** Display or hide the axis grid */
+  /** Object that defines all the axis values. */
+  axisConfig?: AxisConfig,
+  /** Display or hide the axis grid. */
   showGrid?: boolean,
-  /** Override the default scale type for the X axis */
+  /** Override the default scale type for the X axis. */
   xScaleType?: string,
-  /** Override the default scale type for the Y axis */
+  /** Override the default scale type for the Y axis. */
   yScaleType?: string,
-  /** Object that defines the axis values */
-  axisLabels?: AxisLabels,
   /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
   tickFormat?: string,
-  /** Enable / disable gradient color effect */
+  /** Enable / disable gradient color effect. */
   useColorScale?: boolean,
-  /** Override the default colour scale. For use when useColorScale is enabled */
-  colorScale?: scales.ColorScale,
-  /** Override the default color scheme. See d3-scale-chromatic for schemes */
+  /** Override the default colour scale. For use when useColorScale is enabled. */
+  colorScale?: ColorScale,
+  /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
-  /** Enable / disable responsive chart width */
+  /** Enable / disable responsive chart width. */
   fluid?: boolean,
-  /** Message to display if no data is provided */
+  /** Message to display if no data is provided. */
   noDataMessage?: string,
+  /** Function containing eventDispatcher for interactions. */
+  eventDispatcher: Function,
 };
 
 type State = {
@@ -59,9 +58,7 @@ type State = {
   width: number,
 };
 
-/**
- * D3/React Line chart
- */
+/** Class representing a Line chart. */
 class LineChart extends PureComponent<Props, State> {
   static displayName = 'LineChart';
 
@@ -70,29 +67,51 @@ class LineChart extends PureComponent<Props, State> {
     height: 200,
     margin: { top: 20, left: 40, bottom: 30, right: 10 },
     showLegend: true,
-    showXAxis: true,
-    showYAxis: true,
-    showGrid: true,
-    xScaleType: 'ordinal',
-    yScaleType: 'linear',
-    axisLabels: {
+    axisConfig: {
+      showXAxis: true,
+      showXAxisLabel: true,
       xLabel: 'X Axis',
       xLabelPosition: 'right',
+      showYAxis: true,
+      showYAxisLabel: true,
       yLabel: 'Y Axis',
       yLabelPosition: 'top',
     },
+    showGrid: true,
+    xScaleType: 'ordinal',
+    yScaleType: 'linear',
     tickFormat: '',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: false,
     fluid: true,
     noDataMessage: 'No Data Available.',
+    eventDispatcher: dispatch(
+      'legendClick',
+      'lineClick',
+      'lineMouseOver',
+      'lineMouseOut',
+    ),
   };
 
   state = {
     data: this.props.data || [],
     width: this.props.fluid ? 0 : this.props.width,
+    color: null,
   };
+
+  componentWillMount() {
+    const { data, useColorScale, colorScale, colorSchemeCategory } = this.props;
+
+    const color: any = scales.calculateColorScale(
+      data.length,
+      useColorScale,
+      colorScale,
+      colorSchemeCategory,
+    );
+
+    this.setState({ color });
+  }
 
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
@@ -103,8 +122,10 @@ class LineChart extends PureComponent<Props, State> {
     window.removeEventListener('resize', this.updateDimensions);
   }
 
+  /** Updates the width to browser dimensions. */
   updateDimensions = () => {
     const { width, fluid } = this.props;
+
     if (fluid) {
       this.setState({
         width: (this.lineChart && this.lineChart.offsetWidth) || width,
@@ -112,167 +133,33 @@ class LineChart extends PureComponent<Props, State> {
     }
   };
 
-  updateChart(data, { w, h, m, x, y }) {
-    const {
-      showLegend,
-      showXAxis,
-      showYAxis,
-      showGrid,
-      tickFormat,
-      useColorScale,
-      colorScale,
-      colorSchemeCategory,
-      noDataMessage,
-      axisLabels,
-    } = this.props;
-
-    const { xLabel, xLabelPosition, yLabel, yLabelPosition } = axisLabels;
+  /**
+   * Update the chart.
+   * @param {Array<ChartData>} data - chart data to consume.
+   * @param {number} w - width of chart.
+   * @param {number} h - height of chart.
+   * @param {Margin} m - margin bounds of chart.
+   */
+  updateChart(data: Array<ChartData>, w: number, h: number, m: Margin) {
+    const { eventDispatcher } = this.props;
 
     /** Setup container of chart. */
     const node = this.svg;
     const svg = select(node);
 
-    svg.attr('width', w + m.left + m.right);
-    svg.attr('height', h + m.top + m.bottom);
-    svg.selectAll('.wrapper').remove();
-
-    const svgEnter = svg.selectAll('wrapper').data([data]);
-
-    const root = svgEnter
-      .enter()
-      .append('g')
-      .attr('class', 'wrapper')
+    svg
+      .attr('width', w + m.left + m.right)
+      .attr('height', h + m.top + m.bottom)
+      .selectAll('.wrapper')
       .attr('transform', `translate(${+m.left}, ${+m.top})`);
-
-    root.exit().remove();
-
-    /** Dispatching events. */
-    const eventDispatcher = dispatch(
-      'lineClick',
-      'lineMouseOver',
-      'lineMouseOut',
-      'legendClick',
-    );
 
     /** Add series index and key to each data point for reference. */
     chart.mapSeriesToData(data);
-
-    /** Color scale setup. */
-    const color: any = scales.calculateColorScale(
-      data.length,
-      useColorScale,
-      colorScale,
-      colorSchemeCategory,
-    );
-
-    /** No-data setup. */
-    if (!data.length) {
-      root
-        .append('g')
-        .attr('class', 'no-data-wrap')
-        .datum(data)
-        .call(
-          noData()
-            .width(w)
-            .height(h)
-            .message(noDataMessage),
-        );
-      return;
-    }
-
-    /** Legend setup. */
-    if (showLegend) {
-      root.append('g').attr('class', 'legend');
-
-      root
-        .select('.legend')
-        .datum(data)
-        .call(
-          legend()
-            .color(color)
-            .eventDispatcher(eventDispatcher),
-        )
-        .attr('transform', `translate(0, ${-m.top})`);
-    }
-
-    /** X-Axis setup. */
-    if (showXAxis) {
-      const xAxis: any = root
-        .append('g')
-        .attr('class', 'axis x-axis')
-        .attr('transform', `translate(0, ${h})`)
-        .datum(data);
-
-      xAxis.call(axisBottom(x));
-
-      xAxis.call(
-        axisLabel()
-          .label(xLabel)
-          .position(xLabelPosition)
-          .width(w),
-      );
-
-      xAxis
-        .filter(() => showGrid)
-        .append('g')
-        .attr('class', 'grid x-grid')
-        .call(
-          axisBottom(x)
-            .tickSize(-h, 0, 0)
-            .tickFormat(''),
-        );
-    }
-
-    /** Y-Axis setup. */
-    if (showYAxis) {
-      const yAxis: any = root
-        .append('g')
-        .attr('class', 'axis y-axis')
-        .datum(data);
-
-      yAxis.call(axisLeft(y).ticks(10, tickFormat));
-
-      yAxis.call(
-        axisLabel()
-          .label(yLabel)
-          .position(yLabelPosition)
-          .type('y')
-          .height(h),
-      );
-
-      yAxis
-        .filter(() => showGrid)
-        .append('g')
-        .attr('class', 'grid y-grid')
-        .call(
-          axisLeft(y)
-            .tickSize(-w, 0, 0)
-            .tickFormat(''),
-        );
-    }
-
-    /** Lines setup. */
-    root.append('g').attr('class', 'lines');
-
-    root
-      .select('.lines')
-      .datum(data.filter(d => !d.disabled))
-      .call(
-        lines()
-          .width(w)
-          .height(h)
-          .x(x)
-          .y(y)
-          .color(color)
-          .eventDispatcher(eventDispatcher),
-      );
 
     /** Event Handling & Dispatching. */
     eventDispatcher.on('legendClick', d => {
       this.setState({ data: d });
       this.updateChart();
-
-      dom.updateLegend(this.svg);
     });
 
     eventDispatcher.on('lineClick', () => {});
@@ -281,8 +168,20 @@ class LineChart extends PureComponent<Props, State> {
   }
 
   render() {
-    const { data, width } = this.state;
-    const { height, margin, xScaleType, yScaleType } = this.props;
+    const { data, width, color } = this.state;
+
+    const {
+      height,
+      margin,
+      showLegend,
+      axisConfig,
+      showGrid,
+      xScaleType,
+      yScaleType,
+      tickFormat,
+      noDataMessage,
+      eventDispatcher,
+    } = this.props;
 
     const { w, h, m, x, y } = chart.calculateChartValues(
       data.filter(d => !d.disabled),
@@ -293,10 +192,7 @@ class LineChart extends PureComponent<Props, State> {
       yScaleType,
     );
 
-    this.updateChart(data, { w, h, m, x, y });
-
-    /** Enable dynamic width legend items */
-    dom.updateLegend(this.svg);
+    this.updateChart(data, w, h, m, x, y);
 
     return (
       <div
@@ -309,7 +205,46 @@ class LineChart extends PureComponent<Props, State> {
           ref={svg => {
             this.svg = svg;
           }}
-        />
+        >
+          {!data.length && (
+            <NoData
+              width={width}
+              height={height}
+              noDataMessage={noDataMessage}
+            />
+          )}
+          {data.length && (
+            <g className="wrapper">
+              <Legend
+                data={data}
+                width={width}
+                height={h}
+                margin={m}
+                color={color}
+                showLegend={showLegend}
+                eventDispatcher={eventDispatcher}
+              />
+              <Axis
+                data={data}
+                width={width}
+                height={h}
+                margin={m}
+                x={x}
+                y={y}
+                axisConfig={axisConfig}
+                showGrid={showGrid}
+                tickFormat={tickFormat}
+              />
+              <Lines
+                data={data}
+                color={color}
+                x={x}
+                y={y}
+                eventDispatcher={eventDispatcher}
+              />
+            </g>
+          )}
+        </svg>
       </div>
     );
   }
