@@ -157,11 +157,7 @@ class ScatterChart extends PureComponent<Props, State> {
     chart.mapSeriesToData(data);
 
     /** Event Handling & Dispatching. */
-    eventDispatcher.on('legendClick', d => {
-      this.setState({ data: d });
-      this.updateChart();
-    });
-
+    eventDispatcher.on('legendClick', d => this.setState({ data: d }));
     eventDispatcher.on('pointClick', () => {});
     eventDispatcher.on('pointMouseOver', () => {});
     eventDispatcher.on('pointMouseOut', () => {});
