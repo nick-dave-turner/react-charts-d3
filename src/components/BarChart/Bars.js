@@ -20,16 +20,16 @@ type Props = {
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
   y: Function,
   /** Display bar animation effect on load. */
-  animate: boolean,
+  animate?: boolean,
   /** Duration of animation. */
-  duration: number,
+  duration?: number,
   /** Delay of animation before moving onto next group. */
-  delay: number,
+  delay?: number,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher?: Function,
 };
 
-/** Class representing Bars node */
+/** Class representing Bars node. */
 class Bars extends PureComponent<Props> {
   static displayName = 'Bars';
 

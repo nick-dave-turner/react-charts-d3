@@ -3,6 +3,7 @@ A collection of easy to use charts created in D3 for your React applications.
 
 * Bar Chart
 * Line Chart
+* Scatter Chart
 
 [View chart examples](https://nick-dave-turner.github.io/react-charts-d3.github.io/)
 
@@ -17,7 +18,7 @@ yarn add react-charts-d3
 And import the chart types you want
 
 ```es6
-import { BarChart, LineChart } from 'react-charts-d3';
+import { BarChart, LineChart, ScatterChart } from 'react-charts-d3';
 ```
 
 ## Charts
@@ -34,6 +35,12 @@ import { BarChart, LineChart } from 'react-charts-d3';
 <LineChart data={data} />
 ```
 
+[Scatter chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#scatterchart)
+
+```jsx
+<ScatterChart data={data} />
+```
+
 ##### Full list of options for each chart is available under PROPS & METHODS in the example guide.
 
 ## Data Structures
@@ -44,6 +51,9 @@ const data = [
   { key: 'Group 2', values: [ { x: 'A', y: 15 }, { x: 'B', y: 37 } ] },
 ];
 ```
+
+## Changelog
+
 
 ## Contributing
 

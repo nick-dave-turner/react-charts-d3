@@ -20,17 +20,17 @@ type Props = {
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Size of line */
-  strokeWidth: number,
+  strokeWidth?: number,
   /** Display or hide the scatter points on lines. */
-  drawScatterPointers: boolean,
+  drawScatterPointers?: boolean,
   /** Scatter point size. */
-  pointSize: number,
+  pointSize?: number,
   /** Display line animation effect on load. */
-  animate: boolean,
+  animate?: boolean,
   /** Duration of animation. */
-  duration: number,
+  duration?: number,
   /** Delay of animation before moving onto next group. */
-  delay: number,
+  delay?: number,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher?: Function,
 };
@@ -95,9 +95,9 @@ class Lines extends PureComponent<Props> {
     const chartData = data.filter(d => !d.disabled);
 
     /** Setup points for line scale. */
-    const point = lineScale();
-    point.x(d => x(d.x));
-    point.y(d => y(d.y));
+    const area = lineScale();
+    area.x(d => x(d.x));
+    area.y(d => y(d.y));
 
     const node = this.lines;
     const selection = select(node);
@@ -126,29 +126,29 @@ class Lines extends PureComponent<Props> {
 
     /** Set up each line. */
     lineEnter
-      .attr('d', point)
+      .attr('d', area)
       .style('fill', 'none')
       .style('stroke', d => color(d[0].index))
       .style('stroke-width', strokeWidth);
 
     if (drawScatterPointers) {
-      const dot = groupEnter.selectAll('.dot').data(d => d.values);
+      const point = groupEnter.selectAll('.point').data(d => d.values);
 
-      const dotEnter = dot
+      const pointEnter = point
         .enter()
         .append('circle')
-        .attr('class', 'dot');
+        .attr('class', 'point');
 
-      dotEnter.exit().remove();
+      pointEnter.exit().remove();
 
-      dotEnter
+      pointEnter
         .attr('r', pointSize)
         .attr('cx', d => x(d.x))
         .attr('cy', d => y(d.y))
         .style('fill', d => color(d.index));
 
-      /** Animate dots on load */
-      dotEnter
+      /** Animate points on load */
+      pointEnter
         .filter(() => animate)
         .attr('r', 0)
         .transition(transition)

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import NoData from '../../../src/components/NoData/NoData';
 
-xdescribe('<NoData/>', () => {
+xdescribe('<NoData />', () => {
   let component;
 
   beforeEach(() => {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Bars from '../../../src/components/BarChart/Bars';
+import ScatterChart from '../../../src/components/ScatterChart/ScatterChart';
 
-xdescribe('<Bar />', () => {
+xdescribe('<ScatterChart />', () => {
   let component;
 
   beforeEach(() => {
-    component = shallow(<Bars />);
+    component = shallow(<ScatterChart />);
   });
 
   it('should render component', () => {

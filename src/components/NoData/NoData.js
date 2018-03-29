@@ -13,7 +13,7 @@ type Props = {
   noDataMessage?: string,
 };
 
-/** Class representing No Data node */
+/** Class representing No Data node. */
 class NoData extends PureComponent<Props> {
   static displayName = 'NoData';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import BarChart from '../../../src/components/BarChart/BarChart';
 
-xdescribe('<BarChart/>', () => {
+xdescribe('<BarChart />', () => {
   let component;
 
   beforeEach(() => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import LineChart from '../../../src/components/LineChart/LineChart';
 
-xdescribe('<LineChart/>', () => {
+xdescribe('<LineChart />', () => {
   let component;
 
   beforeEach(() => {
