@@ -185,13 +185,12 @@ class Axis extends PureComponent<Props> {
 
   /** Render the Axes. */
   renderAxes = () => {
-    const { margin, axisConfig } = this.props;
+    const { axisConfig } = this.props;
     const { showXAxis, showYAxis } = axisConfig;
 
     const node = this.axis;
     const selection = select(node);
 
-    selection.attr('transform', `translate(${+margin.left}, ${+margin.top})`);
     selection.selectAll('*').remove();
 
     if (showXAxis) {

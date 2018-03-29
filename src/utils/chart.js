@@ -56,13 +56,3 @@ export function mapSeriesToData(chartData: Array<ChartData>): Array<ChartData> {
 
   return chartData;
 }
-
-export function dynamicGetSet(option: string, component: (() => any) => any) {
-  return function getSet(_: any) {
-    if (!arguments.length) {
-      return this[option];
-    }
-    this[option] = _;
-    return component;
-  };
-}

@@ -58,7 +58,6 @@ class Legend extends PureComponent<Props> {
     const node = this.legend;
     const selection = select(node);
 
-    selection.attr('transform', `translate(${+margin.left}, ${+margin.top})`);
     selection.selectAll('*').remove();
 
     const legend = selection

@@ -1,9 +1,0 @@
-.line {
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    shape-rendering: geometricPrecision;
-}
-
-.dot {
-    shape-rendering: geometricPrecision;
-}

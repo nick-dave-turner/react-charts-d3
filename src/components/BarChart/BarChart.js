@@ -3,16 +3,20 @@ import React, { PureComponent } from 'react';
 import { select } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
 
+import Bars from './Bars';
 import Axis from '../Axis/Axis';
 import Legend from '../Legend/Legend';
-
-import bars from '../../models/bars';
-import noData from '../../models/noData';
+import NoData from '../NoData/NoData';
 
 import * as chart from '../../utils/chart';
 import * as scales from '../../utils/scales';
 
-import type { ChartData, Margin, AxisConfig } from '../../utils/commonTypes';
+import type {
+  ChartData,
+  Margin,
+  AxisConfig,
+  ColorScale,
+} from '../../utils/commonTypes';
 
 type Props = {
   /** Chart Data to be consumed by chart. */
@@ -38,7 +42,7 @@ type Props = {
   /** Enable / disable gradient color effect. */
   useColorScale?: boolean,
   /** Override the default colour scale. For use when useColorScale is enabled. */
-  colorScale?: scales.ColorScale,
+  colorScale?: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
   /** Enable / disable responsive chart width. */
@@ -139,7 +143,6 @@ class BarChart extends PureComponent<Props, State> {
    * @param {number} h - height of chart.
    * @param {Margin} m - margin bounds of chart.
    * @param {Function} x - xScale.
-   * @param {Function} y - yScale.
    */
   updateChart(
     data: Array<ChartData>,
@@ -147,65 +150,24 @@ class BarChart extends PureComponent<Props, State> {
     h: number,
     m: Margin,
     x: Function,
-    y: Function,
   ) {
-    const { barSpacing, noDataMessage, eventDispatcher } = this.props;
-    const { color } = this.state;
+    const { barSpacing, eventDispatcher } = this.props;
 
     /** Setup container of chart. */
     const node = this.svg;
     const svg = select(node);
 
-    svg.attr('width', w + m.left + m.right);
-    svg.attr('height', h + m.top + m.bottom);
-    svg.selectAll('.wrapper').remove();
-
-    const svgEnter = svg.selectAll('wrapper').data([data]);
-
-    const root = svgEnter
-      .enter()
-      .append('g')
-      .attr('class', 'wrapper')
+    svg
+      .attr('width', w + m.left + m.right)
+      .attr('height', h + m.top + m.bottom)
+      .selectAll('.wrapper')
       .attr('transform', `translate(${+m.left}, ${+m.top})`);
-
-    root.exit().remove();
 
     /** Add series index and key to each data point for reference. */
     chart.mapSeriesToData(data);
 
     /** Spacing between groups of bars. */
     x.padding(barSpacing);
-
-    /** No-data setup. */
-    if (!data.length) {
-      root
-        .append('g')
-        .attr('class', 'no-data-wrap')
-        .datum(data)
-        .call(
-          noData()
-            .width(w)
-            .height(h)
-            .message(noDataMessage),
-        );
-      return;
-    }
-
-    /** Bars setup. */
-    root.append('g').attr('class', 'bars');
-
-    root
-      .select('.bars')
-      .datum(data.filter(d => !d.disabled))
-      .call(
-        bars()
-          .width(w)
-          .height(h)
-          .x(x)
-          .y(y)
-          .color(color)
-          .eventDispatcher(eventDispatcher),
-      );
 
     /** Event Handling & Dispatching. */
     eventDispatcher.on('legendClick', d => {
@@ -230,6 +192,7 @@ class BarChart extends PureComponent<Props, State> {
       xScaleType,
       yScaleType,
       tickFormat,
+      noDataMessage,
       eventDispatcher,
     } = this.props;
 
@@ -256,26 +219,45 @@ class BarChart extends PureComponent<Props, State> {
             this.svg = svg;
           }}
         >
-          <Legend
-            data={data}
-            width={width}
-            height={h}
-            margin={m}
-            color={color}
-            showLegend={showLegend}
-            eventDispatcher={eventDispatcher}
-          />
-          <Axis
-            data={data}
-            width={width}
-            height={h}
-            margin={m}
-            x={x}
-            y={y}
-            axisConfig={axisConfig}
-            showGrid={showGrid}
-            tickFormat={tickFormat}
-          />
+          {!data.length && (
+            <NoData
+              width={width}
+              height={height}
+              noDataMessage={noDataMessage}
+            />
+          )}
+          {data.length && (
+            <g className="wrapper">
+              <Legend
+                data={data}
+                width={width}
+                height={h}
+                margin={m}
+                color={color}
+                showLegend={showLegend}
+                eventDispatcher={eventDispatcher}
+              />
+              <Axis
+                data={data}
+                width={width}
+                height={h}
+                margin={m}
+                x={x}
+                y={y}
+                axisConfig={axisConfig}
+                showGrid={showGrid}
+                tickFormat={tickFormat}
+              />
+              <Bars
+                data={data}
+                height={h}
+                color={color}
+                x={x}
+                y={y}
+                eventDispatcher={eventDispatcher}
+              />
+            </g>
+          )}
         </svg>
       </div>
     );

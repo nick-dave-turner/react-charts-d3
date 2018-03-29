@@ -1,0 +1,6 @@
+.no-data text {
+    font-size: 20px;
+    font-family: sans-serif;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
