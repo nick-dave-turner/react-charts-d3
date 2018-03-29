@@ -157,11 +157,7 @@ class LineChart extends PureComponent<Props, State> {
     chart.mapSeriesToData(data);
 
     /** Event Handling & Dispatching. */
-    eventDispatcher.on('legendClick', d => {
-      this.setState({ data: d });
-      this.updateChart();
-    });
-
+    eventDispatcher.on('legendClick', d => this.setState({ data: d }));
     eventDispatcher.on('lineClick', () => {});
     eventDispatcher.on('lineMouseOver', () => {});
     eventDispatcher.on('lineMouseOut', () => {});

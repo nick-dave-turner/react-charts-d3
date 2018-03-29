@@ -170,11 +170,7 @@ class BarChart extends PureComponent<Props, State> {
     x.padding(barSpacing);
 
     /** Event Handling & Dispatching. */
-    eventDispatcher.on('legendClick', d => {
-      this.setState({ data: d });
-      this.updateChart();
-    });
-
+    eventDispatcher.on('legendClick', d => this.setState({ data: d }));
     eventDispatcher.on('barClick', () => {});
     eventDispatcher.on('barMouseOver', () => {});
     eventDispatcher.on('barMouseOut', () => {});
