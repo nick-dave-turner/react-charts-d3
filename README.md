@@ -23,20 +23,20 @@ import { BarChart, LineChart } from 'react-charts-d3';
 ## Charts
 
 [Bar chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#barchart)
-##### List of options available under PROPS & METHODS
 
 ```jsx
 <BarChart data={data} />
 ```
 
 [Line chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#linechart)
-##### List of options available under PROPS & METHODS
 
 ```jsx
 <LineChart data={data} />
 ```
 
-## Data
+##### Full list of options for each chart is available under PROPS & METHODS in the example guide.
+
+## Data Structures
 
 ```jsx
 const data = [
@@ -49,6 +49,5 @@ const data = [
 
 Contributions are welcome. Check out [CONTRIBUTING.md](CONTRIBUTING.md)
 
-- [Report bugs](https://github.com/nick-dave-turner/react-charts-d3/issues)
-
+- [Report bugs here.](https://github.com/nick-dave-turner/react-charts-d3/issues)
 
