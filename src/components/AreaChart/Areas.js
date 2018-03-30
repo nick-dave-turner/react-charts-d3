@@ -127,7 +127,7 @@ class Areas extends PureComponent<Props> {
     areaEnter.exit().remove();
 
     /** Set up each area shape. */
-    areaEnter.style('fill', d => color(d[0].index)).style('opacity', 0.25);
+    areaEnter.style('fill', d => color(d[0].index));
 
     /** Animate areas on load */
     areaEnter
