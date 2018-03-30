@@ -1,6 +1,7 @@
 # react-charts-d3
 A collection of easy to use charts created in D3 for your React applications.
 
+* Area Chart
 * Bar Chart
 * Line Chart
 * Scatter Chart
@@ -18,10 +19,16 @@ yarn add react-charts-d3
 And import the chart types you want
 
 ```es6
-import { BarChart, LineChart, ScatterChart } from 'react-charts-d3';
+import { BarChart } from 'react-charts-d3';
 ```
 
 ## Charts
+
+[Area chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#areachart)
+
+```jsx
+<AreaChart data={data} />
+```
 
 [Bar chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#barchart)
 
