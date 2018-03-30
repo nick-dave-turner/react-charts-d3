@@ -1,3 +1,4 @@
 .bar {
     shape-rendering: crispedges;
+    opacity: .75;
 }
