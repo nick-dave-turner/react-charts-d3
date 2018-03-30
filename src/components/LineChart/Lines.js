@@ -94,10 +94,10 @@ class Lines extends PureComponent<Props> {
     /** Filter out disabled data. */
     const chartData = data.filter(d => !d.disabled);
 
-    /** Setup points for line scale. */
-    const area = lineScale();
-    area.x(d => x(d.x));
-    area.y(d => y(d.y));
+    /** Setup line scale. */
+    const linePath = lineScale();
+    linePath.x(d => x(d.x));
+    linePath.y(d => y(d.y));
 
     const node = this.lines;
     const selection = select(node);
@@ -126,7 +126,7 @@ class Lines extends PureComponent<Props> {
 
     /** Set up each line. */
     lineEnter
-      .attr('d', area)
+      .attr('d', linePath)
       .style('fill', 'none')
       .style('stroke', d => color(d[0].index))
       .style('stroke-width', strokeWidth);
