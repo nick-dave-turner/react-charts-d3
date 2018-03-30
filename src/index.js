@@ -3,3 +3,4 @@ export { default as LineChart } from './components/LineChart/LineChart';
 export {
   default as ScatterChart,
 } from './components/ScatterChart/ScatterChart';
+export { default as AreaChart } from './components/AreaChart/AreaChart';

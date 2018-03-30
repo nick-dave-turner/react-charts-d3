@@ -90,7 +90,7 @@ class Points extends PureComponent<Props> {
       .attr('cy', d => y(d.y))
       .style('fill', d => color(d.index));
 
-    /** Animate dots on load */
+    /** Animate points on load */
     pointEnter
       .filter(() => animate)
       .attr('r', 0)
