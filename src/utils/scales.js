@@ -6,50 +6,50 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import { ChartData, ColorScale } from './commonTypes';
 
 export function createDomainRangeScales(
-  axesScaleType: string,
+  axisScaleType: string,
   chartData: Array<ChartData>,
   dataKey: string,
   width: number,
   height: number,
 ): any {
-  let axes;
+  let axis;
 
   /** Flatten chartData array so we can work with total values of all groups. */
   const data = chartData.reduce((a, b) => a.concat(b.values), []);
 
-  switch (axesScaleType) {
+  switch (axisScaleType) {
     case 'band':
-      axes = scaleBand();
-      axes.rangeRound([0, width]);
-      axes.domain(data.map(d => d[dataKey]));
+      axis = scaleBand();
+      axis.rangeRound([0, width]);
+      axis.domain(data.map(d => d[dataKey]));
       break;
 
     case 'linear':
-      axes = scaleLinear();
+      axis = scaleLinear();
       if (dataKey === 'x') {
-        axes.rangeRound([0, width]);
-        axes.domain(extent(data, d => d[dataKey]));
+        axis.rangeRound([0, width]);
+        axis.domain(extent(data, d => d[dataKey]));
       } else {
-        axes.rangeRound([height, 0]);
-        axes.domain([0, max(data, d => d[dataKey])]);
+        axis.rangeRound([height, 0]);
+        axis.domain([0, max(data, d => d[dataKey])]);
       }
       break;
 
     case 'ordinal':
-      axes = scalePoint();
+      axis = scalePoint();
       if (dataKey === 'x') {
-        axes.range([0, width]);
+        axis.range([0, width]);
       } else {
-        axes.range([height, 0]);
+        axis.range([height, 0]);
       }
-      axes.domain(data.map(d => d[dataKey]));
+      axis.domain(data.map(d => d[dataKey]));
       break;
 
     default:
       break;
   }
 
-  return axes;
+  return axis;
 }
 
 export function calculateColorScale(
