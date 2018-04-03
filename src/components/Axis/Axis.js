@@ -80,7 +80,6 @@ class Axis extends PureComponent<Props> {
             label={axisConfig.xLabel}
             labelPosition={axisConfig.xLabelPosition}
             showGrid={showGrid}
-            tickFormat={tickFormat}
           />
         )}
         {axisConfig.showYAxis && (

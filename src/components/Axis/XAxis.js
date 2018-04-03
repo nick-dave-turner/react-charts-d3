@@ -24,8 +24,6 @@ type Props = {
   labelPosition?: string,
   /** Display or hide the axis grid. */
   showGrid?: boolean,
-  /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
-  tickFormat?: string,
 };
 
 /** Class representing an XAxis node. */
@@ -40,7 +38,6 @@ class XAxis extends PureComponent<Props> {
     label: 'X Axis',
     labelPosition: 'right',
     showGrid: true,
-    tickFormat: '',
   };
 
   /**
@@ -78,7 +75,6 @@ class XAxis extends PureComponent<Props> {
       showLabel,
       label,
       showGrid,
-      tickFormat,
     } = this.props;
 
     if (!x) {
@@ -117,7 +113,7 @@ class XAxis extends PureComponent<Props> {
       .call(
         axisBottom(x)
           .tickSize(-height, 0, 0)
-          .tickFormat(tickFormat),
+          .tickFormat(''),
       );
   };
 
