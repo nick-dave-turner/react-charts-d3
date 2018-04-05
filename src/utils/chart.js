@@ -10,6 +10,8 @@ export function calculateChartValues(
   margin: Margin,
   xScaleType: string,
   yScaleType: string,
+  rScaleType?: string,
+  rScale?: number = 1,
 ) {
   const w: number = width - +margin.left - +margin.right;
   const h: number = height - +margin.top - +margin.bottom;
@@ -18,13 +20,21 @@ export function calculateChartValues(
   const x: any = scales.createDomainRangeScales(xScaleType, data, 'x', w, h);
   const y: any = scales.createDomainRangeScales(yScaleType, data, 'y', w, h);
 
-  return {
+  let r: any;
+  let values = {
     w,
     h,
     m,
     x,
     y,
   };
+
+  if (rScaleType) {
+    r = scales.createDomainRangeScales(rScaleType, data, 'r', w, h, rScale);
+    values = { ...values, r };
+  }
+
+  return values;
 }
 
 export function mapSeriesToData(chartData: Array<ChartData>): Array<ChartData> {
