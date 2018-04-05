@@ -1,6 +1,12 @@
 // @flow
-import { max, extent } from 'd3-array';
-import { scaleBand, scaleLinear, scaleOrdinal, scalePoint } from 'd3-scale';
+import { min, max, extent } from 'd3-array';
+import {
+  scaleBand,
+  scaleLinear,
+  scaleOrdinal,
+  scalePoint,
+  scaleSqrt,
+} from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 
 import { ChartData, ColorScale } from './commonTypes';
@@ -11,6 +17,7 @@ export function createDomainRangeScales(
   dataKey: string,
   width: number,
   height: number,
+  scale?: number,
 ): any {
   let axis;
 
@@ -26,12 +33,13 @@ export function createDomainRangeScales(
 
     case 'linear':
       axis = scaleLinear();
+      const minValue = min(data, d => d[dataKey]);
       if (dataKey === 'x') {
         axis.rangeRound([0, width]);
         axis.domain(extent(data, d => d[dataKey]));
       } else {
         axis.rangeRound([height, 0]);
-        axis.domain([0, max(data, d => d[dataKey])]);
+        axis.domain([minValue < 0 ? minValue : 0, max(data, d => d[dataKey])]);
       }
       break;
 
@@ -43,6 +51,12 @@ export function createDomainRangeScales(
         axis.range([height, 0]);
       }
       axis.domain(data.map(d => d[dataKey]));
+      break;
+
+    case 'sqrt':
+      axis = scaleSqrt();
+      axis.rangeRound([1, scale]);
+      axis.domain([min(data, d => d[dataKey]), max(data, d => d[dataKey])]);
       break;
 
     default:

@@ -3,6 +3,8 @@ export type ChartDataItem = {
   x: string,
   /** Item value. */
   y: number,
+  /** Item radius. */
+  r?: number,
   /** Item index. */
   index?: number,
   /** Group item belongs too. */
