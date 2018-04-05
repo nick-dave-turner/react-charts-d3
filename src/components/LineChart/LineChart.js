@@ -45,6 +45,18 @@ type Props = {
   colorScale?: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
+  /** Size of line */
+  strokeWidth?: number,
+  /** Display or hide the scatter points on lines. */
+  drawScatterPointers?: boolean,
+  /** Scatter point size. */
+  pointSize?: number,
+  /** Display line animation effect on load. */
+  animate?: boolean,
+  /** Duration of animation. */
+  duration?: number,
+  /** Delay of animation before moving onto next group. */
+  delay?: number,
   /** Enable / disable responsive chart width. */
   fluid?: boolean,
   /** Message to display if no data is provided. */
@@ -84,6 +96,12 @@ class LineChart extends PureComponent<Props, State> {
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: false,
+    strokeWidth: 1.5,
+    drawScatterPointers: true,
+    pointSize: 2,
+    animate: true,
+    duration: 500,
+    delay: 150,
     fluid: true,
     noDataMessage: 'No Data Available.',
     eventDispatcher: dispatch(
@@ -175,6 +193,12 @@ class LineChart extends PureComponent<Props, State> {
       xScaleType,
       yScaleType,
       tickFormat,
+      strokeWidth,
+      drawScatterPointers,
+      pointSize,
+      animate,
+      duration,
+      delay,
       noDataMessage,
       eventDispatcher,
     } = this.props;
@@ -233,9 +257,15 @@ class LineChart extends PureComponent<Props, State> {
               />
               <Lines
                 data={data}
-                color={color}
                 x={x}
                 y={y}
+                color={color}
+                strokeWidth={strokeWidth}
+                drawScatterPointers={drawScatterPointers}
+                pointSize={pointSize}
+                animate={animate}
+                duration={duration}
+                delay={delay}
                 eventDispatcher={eventDispatcher}
               />
             </g>

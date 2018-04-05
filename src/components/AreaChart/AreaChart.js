@@ -45,6 +45,14 @@ type Props = {
   colorScale?: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
+  /** Size of line */
+  strokeWidth?: number,
+  /** Display area animation effect on load. */
+  animate?: boolean,
+  /** Duration of animation. */
+  duration?: number,
+  /** Delay of animation before moving onto next group. */
+  delay?: number,
   /** Enable / disable responsive chart width. */
   fluid?: boolean,
   /** Message to display if no data is provided. */
@@ -84,6 +92,10 @@ class AreaChart extends PureComponent<Props, State> {
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: false,
+    strokeWidth: 1.5,
+    animate: true,
+    duration: 500,
+    delay: 50,
     fluid: true,
     noDataMessage: 'No Data Available.',
     eventDispatcher: dispatch(
@@ -175,6 +187,10 @@ class AreaChart extends PureComponent<Props, State> {
       xScaleType,
       yScaleType,
       tickFormat,
+      strokeWidth,
+      animate,
+      duration,
+      delay,
       noDataMessage,
       eventDispatcher,
     } = this.props;
@@ -234,9 +250,13 @@ class AreaChart extends PureComponent<Props, State> {
               <Areas
                 data={data}
                 height={h}
-                color={color}
                 x={x}
                 y={y}
+                color={color}
+                strokeWidth={strokeWidth}
+                animate={animate}
+                duration={duration}
+                delay={delay}
                 eventDispatcher={eventDispatcher}
               />
             </g>

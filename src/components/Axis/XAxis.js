@@ -68,14 +68,7 @@ class XAxis extends PureComponent<Props> {
 
   /** Render the X Axis. */
   renderXAxis = () => {
-    const {
-      data,
-      height,
-      x,
-      showLabel,
-      label,
-      showGrid,
-    } = this.props;
+    const { data, height, x, showLabel, label, showGrid } = this.props;
 
     if (!x) {
       return;
