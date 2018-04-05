@@ -45,12 +45,18 @@ type Props = {
   colorScale?: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
+  /** Spacing between each bar. */
+  barSpacing?: number,
+  /** Display area animation effect on load. */
+  animate?: boolean,
+  /** Duration of animation. */
+  duration?: number,
+  /** Delay of animation before moving onto next group. */
+  delay?: number,
   /** Enable / disable responsive chart width. */
   fluid?: boolean,
   /** Message to display if no data is provided. */
   noDataMessage?: string,
-  /** Spacing between each bar. */
-  barSpacing?: number,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
 };
@@ -89,6 +95,9 @@ class BarChart extends PureComponent<Props, State> {
     fluid: true,
     noDataMessage: 'No Data Available.',
     barSpacing: 0.05,
+    animate: true,
+    duration: 500,
+    delay: 50,
     eventDispatcher: dispatch(
       'legendClick',
       'barClick',
@@ -142,16 +151,9 @@ class BarChart extends PureComponent<Props, State> {
    * @param {number} w - width of chart.
    * @param {number} h - height of chart.
    * @param {Margin} m - margin bounds of chart.
-   * @param {Function} x - xScale.
    */
-  updateChart(
-    data: Array<ChartData>,
-    w: number,
-    h: number,
-    m: Margin,
-    x: Function,
-  ) {
-    const { barSpacing, eventDispatcher } = this.props;
+  updateChart(data: Array<ChartData>, w: number, h: number, m: Margin) {
+    const { eventDispatcher } = this.props;
 
     /** Setup container of chart. */
     const node = this.svg;
@@ -165,9 +167,6 @@ class BarChart extends PureComponent<Props, State> {
 
     /** Add series index and key to each data point for reference. */
     chart.mapSeriesToData(data);
-
-    /** Spacing between groups of bars. */
-    x.padding(barSpacing);
 
     /** Event Handling & Dispatching. */
     eventDispatcher.on('legendClick', d => this.setState({ data: d }));
@@ -188,6 +187,10 @@ class BarChart extends PureComponent<Props, State> {
       xScaleType,
       yScaleType,
       tickFormat,
+      barSpacing,
+      animate,
+      duration,
+      delay,
       noDataMessage,
       eventDispatcher,
     } = this.props;
@@ -247,9 +250,13 @@ class BarChart extends PureComponent<Props, State> {
               <Bars
                 data={data}
                 height={h}
-                color={color}
                 x={x}
                 y={y}
+                color={color}
+                barSpacing={barSpacing}
+                animate={animate}
+                duration={duration}
+                delay={delay}
                 eventDispatcher={eventDispatcher}
               />
             </g>

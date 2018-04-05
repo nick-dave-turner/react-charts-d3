@@ -6,9 +6,9 @@ function randomNumber() {
 }
 
 const data = [
-    { key: 'Group 1', values: [ { x: 'A', y: randomNumber() }, { x: 'B', y: randomNumber() }, { x: 'C', y: randomNumber() }, { x: 'D', y: randomNumber() } ] },
-    { key: 'Group 2', values: [ { x: 'A', y: randomNumber() }, { x: 'B', y: randomNumber() }, { x: 'C', y: randomNumber() }, { x: 'D', y: randomNumber() } ] },
-    { key: 'Group 3', values: [ { x: 'A', y: randomNumber() }, { x: 'B', y: randomNumber() }, { x: 'C', y: randomNumber() }, { x: 'D', y: randomNumber() } ] },
+    { key: 'Group 1', values: [ { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() } ] },
+    { key: 'Group 2', values: [ { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() } ] },
+    { key: 'Group 3', values: [ { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() }, { x: randomNumber(), y: randomNumber() } ] },
 ];
 
 <ScatterChart data={data} />

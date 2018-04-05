@@ -13,12 +13,14 @@ type Props = {
   data: Array<ChartData>,
   /** The height the graph or component created inside the SVG should be made. */
   height?: number,
-  /** Function containing the chart or component color-scale. */
-  color: Function,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
   x: Function,
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
   y: Function,
+  /** Function containing the chart or component color-scale. */
+  color: Function,
+  /** Spacing between each bar. */
+  barSpacing?: number,
   /** Display bar animation effect on load. */
   animate?: boolean,
   /** Duration of animation. */
@@ -35,6 +37,7 @@ class Bars extends PureComponent<Props> {
 
   static defaultProps = {
     height: 200,
+    barSpacing: 0.05,
     animate: true,
     duration: 500,
     delay: 50,
@@ -49,6 +52,7 @@ class Bars extends PureComponent<Props> {
       color,
       x,
       y,
+      barSpacing,
       animate,
       duration,
       delay,
@@ -57,6 +61,9 @@ class Bars extends PureComponent<Props> {
 
     /** Filter out disabled data. */
     const chartData = data.filter(d => !d.disabled);
+
+    /** Spacing between groups of bars. */
+    x.padding(barSpacing);
 
     const node = this.bars;
     const selection = select(node);

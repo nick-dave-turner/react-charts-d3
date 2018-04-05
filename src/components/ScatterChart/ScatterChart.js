@@ -45,6 +45,14 @@ type Props = {
   colorScale?: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
   colorSchemeCategory?: any,
+  /** Scatter point size. */
+  pointSize?: number,
+  /** Display line animation effect on load. */
+  animate?: boolean,
+  /** Duration of animation. */
+  duration?: number,
+  /** Delay of animation before moving onto next group. */
+  delay?: number,
   /** Enable / disable responsive chart width. */
   fluid?: boolean,
   /** Message to display if no data is provided. */
@@ -78,12 +86,16 @@ class ScatterChart extends PureComponent<Props, State> {
       yLabelPosition: 'top',
     },
     showGrid: true,
-    xScaleType: 'ordinal',
+    xScaleType: 'linear',
     yScaleType: 'linear',
     tickFormat: '',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: false,
+    pointSize: 3.5,
+    animate: true,
+    duration: 500,
+    delay: 100,
     fluid: true,
     noDataMessage: 'No Data Available.',
     eventDispatcher: dispatch(
@@ -175,6 +187,10 @@ class ScatterChart extends PureComponent<Props, State> {
       xScaleType,
       yScaleType,
       tickFormat,
+      pointSize,
+      animate,
+      duration,
+      delay,
       noDataMessage,
       eventDispatcher,
     } = this.props;
@@ -233,9 +249,13 @@ class ScatterChart extends PureComponent<Props, State> {
               />
               <Points
                 data={data}
-                color={color}
                 x={x}
                 y={y}
+                color={color}
+                pointSize={pointSize}
+                animate={animate}
+                duration={duration}
+                delay={delay}
                 eventDispatcher={eventDispatcher}
               />
             </g>
