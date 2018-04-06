@@ -5,6 +5,7 @@ A collection of easy to use charts created in D3 for your React applications.
 * Bar Chart
 * Line Chart
 * Scatter Chart
+* Bubble Chart
 
 [View chart examples](https://nick-dave-turner.github.io/react-charts-d3.github.io/)
 
@@ -36,6 +37,12 @@ import { BarChart } from 'react-charts-d3';
 <BarChart data={data} />
 ```
 
+[Bubble chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#bubblechart)
+
+```jsx
+<BubbleChart data={data} />
+```
+
 [Line chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#linechart)
 
 ```jsx
@@ -52,6 +59,8 @@ import { BarChart } from 'react-charts-d3';
 
 ## Data Structures
 
+#### Area / Bar / Line / Scatter Charts
+
 ```jsx
 const data = [
   { key: 'Group 1', values: [ { x: 'A', y: 23 }, { x: 'B', y: 8 } ] },
@@ -59,8 +68,18 @@ const data = [
 ];
 ```
 
+#### Bubble Chart
+
+```jsx
+const data = [
+  { key: 'Group 1', values: [ { x: 'A', y: 23, r: 4 }, { x: 'B', y: 8, r: 19 } ] },
+  { key: 'Group 2', values: [ { x: 'A', y: 15, r: 11 }, { x: 'B', y: 37, r: 21 } ] },
+];
+```
+
 ## Changelog
 
+Check out [CHANGELOG.md](CHANGELOG.md)
 
 ## Contributing
 
