@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import XAxis from './XAxis';
@@ -10,21 +11,21 @@ type Props = {
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
-  width?: number,
+  width: number,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Object containing the margins for the chart or component. You can specify only certain margins in the object to change just those parts. */
-  margin?: Margin,
+  margin: Margin,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
   x: Function,
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
   y: Function,
   /** Object that defines all the axis values. */
-  axisConfig?: AxisConfig,
+  axisConfig: AxisConfig,
   /** Display or hide the axis grid. */
-  showGrid?: boolean,
+  showGrid: boolean,
   /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
-  tickFormat?: string,
+  tickFormat: string,
 };
 
 /** Class representing an Axis node. */
@@ -48,6 +49,9 @@ class Axis extends PureComponent<Props> {
     showGrid: true,
     tickFormat: '',
   };
+
+  // Element flow types.
+  axis: ?Element;
 
   render() {
     const {

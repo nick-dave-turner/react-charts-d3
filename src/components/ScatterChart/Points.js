@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -18,15 +19,15 @@ type Props = {
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Scatter point size. */
-  pointSize?: number,
+  pointSize: number,
   /** Display point animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
+  eventDispatcher: Function,
 };
 
 /** Class representing Points node */
@@ -40,6 +41,9 @@ class Points extends PureComponent<Props> {
     delay: 100,
     eventDispatcher: dispatch('pointClick', 'pointMouseOver', 'pointMouseOut'),
   };
+
+  // Element flow types.
+  points: ?Element;
 
   /** Renders the Points node. */
   renderPoints = () => {
@@ -101,14 +105,17 @@ class Points extends PureComponent<Props> {
 
     /** Event Handling & Dispatching */
     pointEnter.on('click', d => {
+      // $FlowFixMe
       eventDispatcher.apply('pointClick', this, [d]);
     });
 
     pointEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('pointMouseOver', this, [d]);
     });
 
     pointEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('pointMouseOut', this, [d]);
     });
   };

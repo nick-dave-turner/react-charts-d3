@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -9,23 +10,23 @@ type Props = {
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
-  width?: number,
+  width: number,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Object containing the margins for the chart or component. You can specify only certain margins in the object to change just those parts. */
-  margin?: Margin,
+  margin: Margin,
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
   y: Function,
   /** Show / hide y axis label. */
-  showLabel?: boolean,
+  showLabel: boolean,
   /** Label string for y axis. */
-  label?: string,
+  label: string,
   /** Position of y label. Top / Middle / Bottom. */
-  labelPosition?: string,
+  labelPosition: string,
   /** Display or hide the axis grid. */
-  showGrid?: boolean,
+  showGrid: boolean,
   /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
-  tickFormat?: string,
+  tickFormat: string,
 };
 
 /** Class representing an YAxis node. */
@@ -43,23 +44,29 @@ class YAxis extends PureComponent<Props> {
     tickFormat: '',
   };
 
+  // Element flow types.
+  yAxis: ?Element;
+
   /**
    * Determines the position of the y axis label.
-   * @param {HTMLElement} node - text element.
+   * @param {Element} node - text element.
    */
-  positionAxisLabel = (node: HTMLElement) => {
+  positionAxisLabel = (node: ?Element) => {
     const { height, labelPosition } = this.props;
 
     switch (labelPosition) {
       case 'top':
+        // $FlowFixMe
         node.attr('x', 0).style('text-anchor', 'end');
         break;
 
       case 'bottom':
+        // $FlowFixMe
         node.attr('x', 0 - height).style('text-anchor', 'start');
         break;
 
       case 'middle':
+        // $FlowFixMe
         node.attr('x', 0 - height / 2).style('text-anchor', 'middle');
         break;
 

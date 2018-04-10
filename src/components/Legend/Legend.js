@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -11,13 +12,13 @@ type Props = {
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** Display or hide the Legend. */
-  showLegend?: boolean,
+  showLegend: boolean,
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Object containing the margins for the chart or component. You can specify only certain margins in the object to change just those parts. */
-  margin?: Margin,
+  margin: Margin,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
+  eventDispatcher: Function,
 };
 
 /** Class representing a Legend node. */
@@ -30,11 +31,14 @@ class Legend extends PureComponent<Props> {
     eventDispatcher: dispatch('legendClick'),
   };
 
+  // Element flow types.
+  legend: ?Element;
+
   /**
    * Updates the legend item widths.
-   * @param {HTMLElement} svg - the legend node.
+   * @param {Element} svg - the legend node.
    */
-  updateLegend = (svg: HTMLElement) => {
+  updateLegend = (svg: ?Element) => {
     const legendItems = select(svg).selectAll('.legend-item');
     let prevLength = 0;
 
@@ -125,6 +129,7 @@ class Legend extends PureComponent<Props> {
         mappedData = disabledData;
       }
 
+      // $FlowFixMe
       eventDispatcher.apply('legendClick', this, [mappedData]);
     });
   };

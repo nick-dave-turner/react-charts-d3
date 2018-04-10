@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -12,7 +13,7 @@ type Props = {
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
   x: Function,
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
@@ -20,15 +21,15 @@ type Props = {
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Spacing between each bar. */
-  barSpacing?: number,
+  barSpacing: number,
   /** Display bar animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
+  eventDispatcher: Function,
 };
 
 /** Class representing Bars node. */
@@ -43,6 +44,9 @@ class Bars extends PureComponent<Props> {
     delay: 50,
     eventDispatcher: dispatch('barClick', 'barMouseOver', 'barMouseOut'),
   };
+
+  // Element flow types.
+  bars: ?Element;
 
   /** Renders the Bars node. */
   renderBars = () => {
@@ -115,14 +119,17 @@ class Bars extends PureComponent<Props> {
 
     /** Event Handling & Dispatching */
     barEnter.on('click', d => {
+      // $FlowFixMe
       eventDispatcher.apply('barClick', this, [d]);
     });
 
     barEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('barMouseOver', this, [d]);
     });
 
     barEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('barMouseOut', this, [d]);
     });
   };

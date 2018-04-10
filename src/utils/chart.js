@@ -20,21 +20,20 @@ export function calculateChartValues(
   const x: any = scales.createDomainRangeScales(xScaleType, data, 'x', w, h);
   const y: any = scales.createDomainRangeScales(yScaleType, data, 'y', w, h);
 
-  let r: any;
-  let values = {
+  let r: any = null;
+
+  if (rScaleType) {
+    r = scales.createDomainRangeScales(rScaleType, data, 'r', w, h, rScale);
+  }
+
+  return {
     w,
     h,
     m,
     x,
     y,
+    r,
   };
-
-  if (rScaleType) {
-    r = scales.createDomainRangeScales(rScaleType, data, 'r', w, h, rScale);
-    values = { ...values, r };
-  }
-
-  return values;
 }
 
 export function mapSeriesToData(chartData: Array<ChartData>): Array<ChartData> {

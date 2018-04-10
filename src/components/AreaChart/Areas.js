@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -13,7 +14,7 @@ type Props = {
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
   x: Function,
   /** Function containing Y Scale created by scales.createDomainRangeScales() */
@@ -21,15 +22,15 @@ type Props = {
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Size of line */
-  strokeWidth?: number,
+  strokeWidth: number,
   /** Display area animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
+  eventDispatcher: Function,
 };
 
 /** Class representing Areas node */
@@ -44,6 +45,9 @@ class Areas extends PureComponent<Props> {
     delay: 50,
     eventDispatcher: dispatch('areaClick', 'areaMouseOver', 'areaMouseOut'),
   };
+
+  // Element flow types.
+  areas: ?Element;
 
   /** Renders the Areas node. */
   renderAreas = () => {
@@ -143,14 +147,17 @@ class Areas extends PureComponent<Props> {
 
     /** Event Handling & Dispatching */
     areaEnter.on('click', d => {
+      // $FlowFixMe
       eventDispatcher.apply('areaClick', this, [d]);
     });
 
     areaEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('areaMouseOver', this, [d]);
     });
 
     areaEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('areaMouseOut', this, [d]);
     });
   };

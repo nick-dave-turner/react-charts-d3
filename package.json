@@ -1,6 +1,6 @@
 {
   "name": "react-charts-d3",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "A collection of easy to use charts created in D3 for your React applications.",
   "author": "Nick Turner",
   "homepage": "https://nick-dave-turner.github.io/react-charts-d3.github.io/",

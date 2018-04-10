@@ -43,7 +43,7 @@ export interface AxisConfig {
   /** X axis label. */
   xLabel?: string;
   /** Position of X axis label - left / center / right. */
-  xLabelPosition?: string;
+  xLabelPosition?: 'left' | 'center' | 'right';
   /** Display or hide the Y axis. */
   showYAxis?: boolean;
   /** Display or hide the Y axis label. */
@@ -51,7 +51,7 @@ export interface AxisConfig {
   /** Y axis label. */
   yLabel?: string;
   /** Position of Y axis label - top / middle / bottom. */
-  yLabelPosition?: string;
+  yLabelPosition?: 'top' | 'middle' | 'bottom';
 }
 
 export interface ColorScale {
