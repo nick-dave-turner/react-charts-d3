@@ -6,7 +6,7 @@ import { axisBottom } from 'd3-axis';
 
 import { ChartData, Margin } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
@@ -25,7 +25,7 @@ type Props = {
   labelPosition: string,
   /** Display or hide the axis grid. */
   showGrid: boolean,
-};
+|};
 
 /** Class representing an XAxis node. */
 class XAxis extends PureComponent<Props> {

@@ -5,14 +5,14 @@ import { select } from 'd3-selection';
 
 import './noData.css';
 
-type Props = {
+type Props = {|
   /** The width the graph or component created inside the SVG should be made. */
   width: number,
   /** The height the graph or component created inside the SVG should be made. */
   height: number,
   /** Message to display if no data is provided. */
   noDataMessage: string,
-};
+|};
 
 /** Class representing No Data node. */
 class NoData extends PureComponent<Props> {

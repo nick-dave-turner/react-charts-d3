@@ -6,7 +6,7 @@ import { axisLeft } from 'd3-axis';
 
 import { ChartData, Margin } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
@@ -27,7 +27,7 @@ type Props = {
   showGrid: boolean,
   /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
   tickFormat: string,
-};
+|};
 
 /** Class representing an YAxis node. */
 class YAxis extends PureComponent<Props> {

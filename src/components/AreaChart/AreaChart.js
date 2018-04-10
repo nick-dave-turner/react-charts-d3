@@ -236,7 +236,6 @@ class AreaChart extends PureComponent<Props, State> {
               <Legend
                 data={data}
                 width={width}
-                height={h}
                 margin={m}
                 color={color}
                 showLegend={showLegend}

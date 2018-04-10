@@ -19,7 +19,7 @@ import type {
   ColorScale,
 } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
@@ -60,13 +60,13 @@ type Props = {
   noDataMessage: string,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
-};
+|};
 
-type State = {
+type State = {|
   data: Array<ChartData>,
   width: number,
   color: Function,
-};
+|};
 
 /** Class representing a Scatter chart. */
 class ScatterChart extends PureComponent<Props, State> {
@@ -236,7 +236,6 @@ class ScatterChart extends PureComponent<Props, State> {
               <Legend
                 data={data}
                 width={width}
-                height={h}
                 margin={m}
                 color={color}
                 showLegend={showLegend}

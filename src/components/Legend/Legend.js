@@ -8,9 +8,11 @@ import './legend.css';
 
 import { ChartData, Margin } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
+  /** The width the graph or component created inside the SVG should be made. */
+  width: number,
   /** Display or hide the Legend. */
   showLegend: boolean,
   /** Function containing the chart or component color-scale. */
@@ -19,7 +21,7 @@ type Props = {
   margin: Margin,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
-};
+|};
 
 /** Class representing a Legend node. */
 class Legend extends PureComponent<Props> {
@@ -135,7 +137,9 @@ class Legend extends PureComponent<Props> {
   };
 
   render() {
-    if (this.props.showLegend) {
+    const { width, showLegend } = this.props;
+
+    if (showLegend && width) {
       this.renderLegend();
     }
 

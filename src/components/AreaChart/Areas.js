@@ -10,7 +10,7 @@ import './areas.css';
 
 import { ChartData } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The height the graph or component created inside the SVG should be made. */
@@ -31,7 +31,7 @@ type Props = {
   delay: number,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
-};
+|};
 
 /** Class representing Areas node */
 class Areas extends PureComponent<Props> {

@@ -9,7 +9,7 @@ import './scatter.css';
 
 import { ChartData } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
@@ -28,7 +28,7 @@ type Props = {
   delay: number,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
-};
+|};
 
 /** Class representing Points node */
 class Points extends PureComponent<Props> {
