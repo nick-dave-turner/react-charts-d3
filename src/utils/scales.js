@@ -23,6 +23,7 @@ export function createDomainRangeScales(
 
   /** Flatten chartData array so we can work with total values of all groups. */
   const data = chartData.reduce((a, b) => a.concat(b.values), []);
+  const minValue = min(data, d => d[dataKey]);
 
   switch (axisScaleType) {
     case 'band':
@@ -33,7 +34,6 @@ export function createDomainRangeScales(
 
     case 'linear':
       axis = scaleLinear();
-      const minValue = min(data, d => d[dataKey]);
       if (dataKey === 'x') {
         axis.rangeRound([0, width]);
         axis.domain(extent(data, d => d[dataKey]));
@@ -67,18 +67,19 @@ export function createDomainRangeScales(
 }
 
 export function calculateColorScale(
-  length: number,
+  dataLength: number,
   useColorScale?: boolean = false,
-  colors?: ColorScale = {},
+  colorRange?: ColorScale = {},
+  schemeCategory?: Array<string>,
 ): () => any {
   let color: any;
 
   if (useColorScale) {
     color = scaleLinear()
-      .domain([0, length - 1])
-      .range([colors.from, colors.to]);
+      .domain([0, dataLength - 1])
+      .range([colorRange.from, colorRange.to]);
   } else {
-    color = scaleOrdinal(schemeCategory10);
+    color = scaleOrdinal(schemeCategory || schemeCategory10);
   }
 
   return color;

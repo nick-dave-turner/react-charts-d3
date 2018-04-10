@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -18,55 +19,56 @@ import type {
   ColorScale,
 } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** The width the graph or component created inside the SVG should be made. */
-  width?: number,
+  width: number,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Object containing the margins for the chart or component. You can specify only certain margins in the object to change just those parts. */
-  margin?: Margin,
+  margin: Margin,
   /** Display or hide the Legend. */
-  showLegend?: boolean,
+  showLegend: boolean,
   /** Object that defines all the axis values. */
-  axisConfig?: AxisConfig,
+  axisConfig: AxisConfig,
   /** Display or hide the axis grid. */
-  showGrid?: boolean,
+  showGrid: boolean,
   /** Override the default scale type for the X axis. */
-  xScaleType?: string,
+  xScaleType: string,
   /** Override the default scale type for the Y axis. */
-  yScaleType?: string,
+  yScaleType: string,
   /** Override the default scale type for the R axis. */
-  rScaleType?: string,
+  rScaleType: string,
   /** If format is specified, sets the tick format function and returns the axis. See d3-format and d3-time-format for help. */
-  tickFormat?: string,
+  tickFormat: string,
   /** Enable / disable gradient color effect. */
-  useColorScale?: boolean,
+  useColorScale: boolean,
   /** Override the default colour scale. For use when useColorScale is enabled. */
-  colorScale?: ColorScale,
+  colorScale: ColorScale,
   /** Override the default color scheme. See d3-scale-chromatic for schemes. */
-  colorSchemeCategory?: any,
+  colorSchemeCategory: any,
   /** Scale value used to size the bubble. */
-  bubbleScale?: number,
+  bubbleScale: number,
   /** Display line animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Enable / disable responsive chart width. */
-  fluid?: boolean,
+  fluid: boolean,
   /** Message to display if no data is provided. */
-  noDataMessage?: string,
+  noDataMessage: string,
   /** Function containing eventDispatcher for interactions. */
   eventDispatcher: Function,
-};
+|};
 
-type State = {
+type State = {|
   data: Array<ChartData>,
   width: number,
-};
+  color: Function,
+|};
 
 /** Class representing a Bubble chart. */
 class BubbleChart extends PureComponent<Props, State> {
@@ -94,7 +96,7 @@ class BubbleChart extends PureComponent<Props, State> {
     tickFormat: '',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
-    colorSchemeCategory: false,
+    colorSchemeCategory: [],
     bubbleScale: 10,
     animate: true,
     duration: 500,
@@ -112,7 +114,7 @@ class BubbleChart extends PureComponent<Props, State> {
   state = {
     data: this.props.data || [],
     width: this.props.fluid ? 0 : this.props.width,
-    color: null,
+    color: () => undefined,
   };
 
   componentWillMount() {
@@ -136,6 +138,10 @@ class BubbleChart extends PureComponent<Props, State> {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
   }
+
+  // Element flow types.
+  bubbleChart: ?HTMLElement;
+  svg: ?Element;
 
   /** Updates the width to browser dimensions. */
   updateDimensions = () => {
@@ -210,7 +216,7 @@ class BubbleChart extends PureComponent<Props, State> {
       bubbleScale,
     );
 
-    this.updateChart(data, w, h, m, x, y);
+    this.updateChart(data, w, h, m);
 
     return (
       <div
@@ -236,7 +242,6 @@ class BubbleChart extends PureComponent<Props, State> {
               <Legend
                 data={data}
                 width={width}
-                height={h}
                 margin={m}
                 color={color}
                 showLegend={showLegend}

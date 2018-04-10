@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -8,7 +9,7 @@ import './bubbles.css';
 
 import { ChartData } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
@@ -20,14 +21,14 @@ type Props = {
   /** Function containing the chart or component color-scale. */
   color: Function,
   /** Display bubble animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
-};
+  eventDispatcher: Function,
+|};
 
 /** Class representing Bubbles node */
 class Bubbles extends PureComponent<Props> {
@@ -43,6 +44,9 @@ class Bubbles extends PureComponent<Props> {
       'bubbleMouseOut',
     ),
   };
+
+  // Element flow types.
+  bubbles: ?Element;
 
   /** Renders the Bubbles node. */
   renderBubbles = () => {
@@ -104,14 +108,17 @@ class Bubbles extends PureComponent<Props> {
 
     /** Event Handling & Dispatching */
     bubbleEnter.on('click', d => {
+      // $FlowFixMe
       eventDispatcher.apply('bubbleClick', this, [d]);
     });
 
     bubbleEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('bubbleMouseOver', this, [d]);
     });
 
     bubbleEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('bubbleMouseOut', this, [d]);
     });
   };

@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
@@ -10,7 +11,7 @@ import './lines.css';
 
 import { ChartData } from '../../utils/commonTypes';
 
-type Props = {
+type Props = {|
   /** Chart Data to be consumed by chart. */
   data: Array<ChartData>,
   /** Function containing X Scale created by scales.createDomainRangeScales() */
@@ -22,18 +23,18 @@ type Props = {
   /** Size of line */
   strokeWidth?: number,
   /** Display or hide the scatter points on lines. */
-  drawScatterPointers?: boolean,
+  drawScatterPointers: boolean,
   /** Scatter point size. */
-  pointSize?: number,
+  pointSize: number,
   /** Display line animation effect on load. */
-  animate?: boolean,
+  animate: boolean,
   /** Duration of animation. */
-  duration?: number,
+  duration: number,
   /** Delay of animation before moving onto next group. */
-  delay?: number,
+  delay: number,
   /** Function containing eventDispatcher for interactions. */
-  eventDispatcher?: Function,
-};
+  eventDispatcher: Function,
+|};
 
 /** Class representing Lines node */
 class Lines extends PureComponent<Props> {
@@ -49,11 +50,14 @@ class Lines extends PureComponent<Props> {
     eventDispatcher: dispatch('lineClick', 'lineMouseOver', 'lineMouseOut'),
   };
 
+  // Element flow types.
+  lines: ?Element;
+
   /**
    * Animation effect for lines.
-   * @param {HTMLElement} node - the lines node.
+   * @param {Element} node - the lines node.
    */
-  animateLines = (node: HTMLElement) => {
+  animateLines = (node: ?Element) => {
     const { animate, duration } = this.props;
 
     const lines = select(node).selectAll('.group');
@@ -161,14 +165,17 @@ class Lines extends PureComponent<Props> {
 
     /** Event Handling & Dispatching */
     lineEnter.on('click', d => {
+      // $FlowFixMe
       eventDispatcher.apply('lineClick', this, [d]);
     });
 
     lineEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('lineMouseOver', this, [d]);
     });
 
     lineEnter.on('mouseover', d => {
+      // $FlowFixMe
       eventDispatcher.apply('lineMouseOut', this, [d]);
     });
   };

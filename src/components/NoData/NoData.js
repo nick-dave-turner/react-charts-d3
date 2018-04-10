@@ -1,17 +1,18 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import { select } from 'd3-selection';
 
 import './noData.css';
 
-type Props = {
+type Props = {|
   /** The width the graph or component created inside the SVG should be made. */
-  width?: number,
+  width: number,
   /** The height the graph or component created inside the SVG should be made. */
-  height?: number,
+  height: number,
   /** Message to display if no data is provided. */
-  noDataMessage?: string,
-};
+  noDataMessage: string,
+|};
 
 /** Class representing No Data node. */
 class NoData extends PureComponent<Props> {
@@ -22,6 +23,9 @@ class NoData extends PureComponent<Props> {
     height: 200,
     noDataMessage: 'No Data Available.',
   };
+
+  // Element flow types.
+  noData: ?Element;
 
   /** Renders the No Data message node. */
   renderNoData = () => {
