@@ -3,9 +3,10 @@ A collection of easy to use charts created in D3 for your React applications.
 
 * Area Chart
 * Bar Chart
-* Line Chart
-* Scatter Chart
 * Bubble Chart
+* Line Chart
+* Pie Chart
+* Scatter Chart
 
 [View chart examples](https://nick-dave-turner.github.io/react-charts-d3.github.io/)
 
@@ -49,6 +50,12 @@ import { BarChart } from 'react-charts-d3';
 <LineChart data={data} />
 ```
 
+[Pie chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#piechart)
+
+```jsx
+<PieChart data={data} />
+```
+
 [Scatter chart](https://nick-dave-turner.github.io/react-charts-d3.github.io/#scatterchart)
 
 ```jsx
@@ -74,6 +81,15 @@ const data = [
 const data = [
   { key: 'Group 1', values: [ { x: 'A', y: 23, r: 4 }, { x: 'B', y: 8, r: 19 } ] },
   { key: 'Group 2', values: [ { x: 'A', y: 15, r: 11 }, { x: 'B', y: 37, r: 21 } ] },
+];
+```
+
+#### Pie Chart
+
+```jsx
+const data = [
+  { label: 'Group 1', value: 23 },
+  { label: 'Group 2', value: 15 },
 ];
 ```
 

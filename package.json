@@ -1,6 +1,6 @@
 {
   "name": "react-charts-d3",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "description": "A collection of easy to use charts created in D3 for your React applications.",
   "author": "Nick Turner",
   "homepage": "https://nick-dave-turner.github.io/react-charts-d3.github.io/",
@@ -33,6 +33,7 @@
     "d3-color": "^1.0.3",
     "d3-dispatch": "^1.0.3",
     "d3-ease": "^1.0.3",
+    "d3-format": "^1.2.2",
     "d3-interpolate": "^1.1.6",
     "d3-scale": "^2.0.0",
     "d3-scale-chromatic": "^1.2.0",

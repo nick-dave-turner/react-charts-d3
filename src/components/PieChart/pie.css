@@ -1,0 +1,10 @@
+.arc path {
+    stroke: #fff;
+    opacity: .75;
+    shape-rendering: geometricPrecision;
+}
+
+.pie-label {
+    font-size: 10px;
+    font-family: sans-serif;
+}
