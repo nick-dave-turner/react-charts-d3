@@ -1,8 +1,8 @@
 export type ChartDataItem = {
   /** Item key. */
-  x: string,
+  x: string | number,
   /** Item value. */
-  y: number,
+  y: string | number,
   /** Item radius. */
   r?: number,
   /** Item index. */
@@ -22,6 +22,15 @@ export type ChartData = {
   index?: number,
   /** Is the group disabled or not. */
   disabled?: boolean,
+};
+
+export type PieData = {
+  /** Item name. */
+  label: string,
+  /** Item value. */
+  value: string | number,
+  /** Item index. */
+  index?: number,
 };
 
 export interface Margin {

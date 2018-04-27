@@ -1,5 +1,14 @@
 ## Changelog
 
+### [2.4.0](https://github.com/nick-dave-turner/react-charts-d3/pull/11)
+
+#### Added
+- Pie chart component
+
+### [2.3.2](https://github.com/nick-dave-turner/react-charts-d3/pull/10)
+
+#### Changed
+- Added Flow type checking to every component
 
 ### [2.3.0](https://github.com/nick-dave-turner/react-charts-d3/pull/9)
 
