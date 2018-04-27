@@ -1,8 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react';
 
-import { select } from 'd3-selection';
+import { select, event } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
+import { format } from 'd3-format';
 
 import Bubbles from './Bubbles';
 import Axis from '../Axis/Axis';
@@ -50,6 +51,8 @@ type Props = {|
   colorSchemeCategory: any,
   /** Scale value used to size the bubble. */
   bubbleScale: number,
+  /** Format the values when displaying tooltips. */
+  valueFormatter: Function,
   /** Display line animation effect on load. */
   animate: boolean,
   /** Duration of animation. */
@@ -98,6 +101,7 @@ class BubbleChart extends PureComponent<Props, State> {
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: [],
     bubbleScale: 10,
+    valueFormatter: format('.3n'),
     animate: true,
     duration: 500,
     delay: 100,
@@ -108,6 +112,7 @@ class BubbleChart extends PureComponent<Props, State> {
       'bubbleClick',
       'bubbleMouseOver',
       'bubbleMouseOut',
+      'bubbleMouseMove',
     ),
   };
 
@@ -162,11 +167,17 @@ class BubbleChart extends PureComponent<Props, State> {
    * @param {Margin} m - margin bounds of chart.
    */
   updateChart(data: Array<ChartData>, w: number, h: number, m: Margin) {
-    const { eventDispatcher } = this.props;
+    const { eventDispatcher, valueFormatter } = this.props;
+
+    /** Setup tooltip. */
+    const tooltip = select(this.bubbleChart)
+      .append('div')
+      .attr('class', 'tooltip');
+
+    const tooltipPadding = { top: 55, left: 25 };
 
     /** Setup container of chart. */
-    const node = this.svg;
-    const svg = select(node);
+    const svg = select(this.svg);
 
     svg
       .attr('width', w + m.left + m.right)
@@ -179,9 +190,26 @@ class BubbleChart extends PureComponent<Props, State> {
 
     /** Event Handling & Dispatching. */
     eventDispatcher.on('legendClick', d => this.setState({ data: d }));
+
     eventDispatcher.on('bubbleClick', () => {});
-    eventDispatcher.on('bubbleMouseOver', () => {});
-    eventDispatcher.on('bubbleMouseOut', () => {});
+
+    eventDispatcher.on('bubbleMouseOver', d => {
+      tooltip
+        .html(`<strong>R</strong>: ${valueFormatter(d.r)}`)
+        .style('top', `${event.pageY - tooltipPadding.top}px`)
+        .style('left', `${event.pageX - tooltipPadding.left}px`)
+        .style('display', 'block');
+    });
+
+    eventDispatcher.on('bubbleMouseOut', () => {
+      tooltip.style('display', 'none');
+    });
+
+    eventDispatcher.on('bubbleMouseMove', () => {
+      tooltip
+        .style('top', `${event.pageY - tooltipPadding.top}px`)
+        .style('left', `${event.pageX - tooltipPadding.left}px`);
+    });
   }
 
   render() {

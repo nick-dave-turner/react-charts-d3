@@ -2,3 +2,27 @@
     shape-rendering: geometricPrecision;
     opacity: .75;
 }
+
+.tooltip {
+    position: absolute;
+    z-index: 3;
+    padding: 10px;
+    font-size: 12px;
+    font-family: sans-serif;
+    background: #fff;
+    border: 2px solid #ddd;
+    opacity: .75;
+}
+
+.tooltip::after {
+    box-sizing: border-box;
+    display: inline;
+    width: 100%;
+    line-height: 1;
+    color: #ddd;
+    content: "\25BC";
+    position: absolute;
+    margin: -2px 0 0 0;
+    top: 100%;
+    left: 15px;
+}

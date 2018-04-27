@@ -42,6 +42,7 @@ class Bubbles extends PureComponent<Props> {
       'bubbleClick',
       'bubbleMouseOver',
       'bubbleMouseOut',
+      'bubbleMouseMove',
     ),
   };
 
@@ -117,9 +118,14 @@ class Bubbles extends PureComponent<Props> {
       eventDispatcher.apply('bubbleMouseOver', this, [d]);
     });
 
-    bubbleEnter.on('mouseover', d => {
+    bubbleEnter.on('mouseout', d => {
       // $FlowFixMe
       eventDispatcher.apply('bubbleMouseOut', this, [d]);
+    });
+
+    bubbleEnter.on('mousemove', d => {
+      // $FlowFixMe
+      eventDispatcher.apply('bubbleMouseMove', this, [d]);
     });
   };
 
