@@ -94,7 +94,7 @@ class LineChart extends PureComponent<Props, State> {
     showGrid: true,
     xScaleType: 'ordinal',
     yScaleType: 'linear',
-    tickFormat: '',
+    tickFormat: '.0f',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: [],

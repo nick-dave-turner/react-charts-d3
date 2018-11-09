@@ -93,7 +93,7 @@ class BubbleChart extends PureComponent<Props, State> {
     xScaleType: 'linear',
     yScaleType: 'linear',
     rScaleType: 'sqrt',
-    tickFormat: '',
+    tickFormat: '.0f',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: [],

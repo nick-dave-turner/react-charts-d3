@@ -90,7 +90,7 @@ class BarChart extends PureComponent<Props, State> {
     showGrid: true,
     xScaleType: 'band',
     yScaleType: 'linear',
-    tickFormat: '',
+    tickFormat: '.0f',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: [],

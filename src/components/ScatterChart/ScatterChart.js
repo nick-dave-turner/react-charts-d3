@@ -90,7 +90,7 @@ class ScatterChart extends PureComponent<Props, State> {
     showGrid: true,
     xScaleType: 'linear',
     yScaleType: 'linear',
-    tickFormat: '',
+    tickFormat: '.0f',
     useColorScale: true,
     colorScale: { from: '#008793', to: '#00bf72' },
     colorSchemeCategory: [],
