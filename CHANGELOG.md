@@ -1,5 +1,10 @@
 ## Changelog
 
+### [2.4.1](https://github.com/nick-dave-turner/react-charts-d3/pull/13)
+
+#### Fixed
+- Format axis numbers for human consumption. Default values render to 0 decimal places.
+
 ### [2.4.0](https://github.com/nick-dave-turner/react-charts-d3/pull/11)
 
 #### Added
