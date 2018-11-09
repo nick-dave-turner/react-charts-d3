@@ -47,7 +47,7 @@ class Axis extends PureComponent<Props> {
       yLabelPosition: 'top',
     },
     showGrid: true,
-    tickFormat: '',
+    tickFormat: '.0f',
   };
 
   // Element flow types.
